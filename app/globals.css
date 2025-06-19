@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  /* Light Colors */
+  --color-light-primary: #22ad01;
+  --color-light-primary-light: #7fd76a;
+  --color-light-primary-dark: #268f0c;
+
+  --color-light-secondary: #e6e6e6;
+  --color-light-secondary-light: #c0c4ca;
+  --color-light-secondary-dark: #e0e0e0;
+
+  --color-light-base: #f2f2f2;
+  --color-light-base-light: #f9f9f9;
+  --color-light-base-dark: #414141;
+  --color-light-gray-dark: #020202;
+  --color-light-background: #fafafa;
+  --color-light-surface: #ffffff;
+
+  /* Status Colors */
+  --color-status-green: #ccedc5;
+  --color-status-red: #ffe0dc;
+  --color-status-yellow: #fff3d3;
+  --color-status-blue: #e7ecff;
+  --color-status-purple: #e5d9ff;
+  --color-status-orange: #f68319;
+  --color-status-basic: #e7e7e7;
+
+  /* Typography Colors */
+  --color-typography-primary: #22ad01;
+  --color-typography-primary-light: #ffffff;
+  --color-typography-primary-dark: #26ae0633;
+
+  --color-typography-secondary: #2e2e2e;
+  --color-typography-secondary-light: #7e7e7e;
+  --color-typography-secondary-dark: #393939;
+
+  --color-typography-status-green: #22ad01;
+  --color-typography-status-red: #ff472e;
+  --color-typography-status-yellow: #cc9300;
+  --color-typography-status-blue: #423eea;
+  --color-typography-status-purple: #6734f8;
+  --color-typography-status-orange: #ff7658;
+
+  /* Other Variables */
+  --color-border: #dadada;
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
