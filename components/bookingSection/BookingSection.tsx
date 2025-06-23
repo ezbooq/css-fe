@@ -4,51 +4,34 @@ import CardSelect from "../cardSelect/CardSelect";
 import PackageSelect from "../packageSelect/PackageSelect";
 import AddOnsSection from "../addOnsSection/AddOnsSection";
 import useCartStore from "@/stores/useCart";
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getBusinessCategories } from "@/services/category/category";
 
 function BookingSection() {
+  const { businessCode } = useParams();
   const { hasPackageInCategory } = useCartStore((state) => state);
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     undefined
   );
 
   const hasPackage = hasPackageInCategory(selectedCategory);
-  console.log(hasPackage);
-  const categories = [
-    {
-      id: "12345",
-      name: "Car",
-      image:
-        "https://www.creativefabrica.com/wp-content/uploads/2021/02/08/car-icon-red-Graphics-8433168-1.jpg",
-    },
-    {
-      id: "67890",
-      name: "Bike",
-      image:
-        "https://images.vexels.com/media/users/3/152654/isolated/preview/e5694fb12916c00661195c0a833d1ba9-sports-bike-icon.png",
-    },
-    {
-      id: "54325",
-      name: "Van",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUNuB1_hoo7jAftVKrD5GLzATExcV2IT5B3w&s",
-    },
-    {
-      id: "54321",
-      name: "SUV",
-      image:
-        "https://i.fbcd.co/products/resized/resized-750-500/l007e-5-e10-mainpreview-832296c52d332d98ef30d95ca7c530fed7387355248fe7da91d92a86e5615304.jpg",
-    },
-  ];
+
   const handleCategorySelect = (id: string) => {
     setSelectedCategory(id);
   };
-
+  const categories = useQuery({
+    queryKey: ["categories", { businessCode: businessCode ?? "" }],
+    queryFn: getBusinessCategories,
+    enabled: !!businessCode,
+  });
+  console.log(categories);
   return (
     <div className="p-4">
       <div>
         <p className="text-xl  font-semibold mb-5">Categories</p>
         <CardSelect
-          cardData={categories}
+          cardData={categories.data || []}
           selectedCard={selectedCategory}
           setSelectedCard={handleCategorySelect}
         />

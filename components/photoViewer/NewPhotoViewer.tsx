@@ -1,21 +1,23 @@
 "use client";
+import Image from "next/image";
 import { FileItem } from "@/types/file";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
-type PhotoViewerProps = {
+type NewPhotoViewerProps = {
   images: (string | FileItem)[];
   aspectRatio?: string; // e.g. "1440 / 560"
   rounded?: boolean;
   autoRotate?: boolean;
+  height?: number;
 };
 
-export default function PhotoViewer({
+export default function NewPhotoViewer({
   images = [],
   aspectRatio = "1440 / 560",
   rounded = false,
-  autoRotate = true, // default to true
-}: PhotoViewerProps) {
+  autoRotate = true,
+  height = 150,
+}: NewPhotoViewerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const getImageSrc = (image: string | FileItem) =>
@@ -23,11 +25,9 @@ export default function PhotoViewer({
 
   useEffect(() => {
     if (!autoRotate || images.length === 0) return;
-
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 3000);
-
     return () => clearInterval(interval);
   }, [images.length, autoRotate]);
 
@@ -37,17 +37,17 @@ export default function PhotoViewer({
         className={`relative w-full bg-gray-200 overflow-hidden ${
           rounded ? "rounded-lg" : ""
         }`}
-        style={{ aspectRatio }}
+        style={{ aspectRatio, height }}
       >
         {images.length > 0 ? (
           <Image
             src={getImageSrc(images[currentIndex])}
             alt={`Image ${currentIndex + 1}`}
             fill
-            className="object-cover"
-            sizes="100vw"
             style={{ objectFit: "cover" }}
-            priority
+            className="w-full h-full"
+            sizes="100vw"
+            priority={currentIndex === 0}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-500">

@@ -5,10 +5,12 @@ import { XMarkIcon } from "@heroicons/react/16/solid";
 import useCartStore from "@/stores/useCart";
 import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
 import { useParams, useRouter } from "next/navigation";
-
-function Cart() {
+type CartProps = {
+  hiddenCheckOut?: boolean;
+};
+function Cart({ hiddenCheckOut = false }: CartProps) {
   const router = useRouter();
-  const { businessCode } = useParams();
+  const { businessCode, companyCode } = useParams();
   const items = useCartStore((state) => state.items);
   const totalAmount = useCartStore((state) => state.totalAmount);
   const removeItem = useCartStore((state) => state.removeItem);
@@ -16,7 +18,7 @@ function Cart() {
   const packages = items.filter((item) => item.type === "PACKAGE");
   const addons = items.filter((item) => item.type === "ADDONS");
   const handleCheckOut = () => {
-    router.push(`/${businessCode}/address`);
+    router.push(`/booking/${companyCode}/${businessCode}/check-out`);
   };
   return (
     <div className="ring-1 ring-light-base rounded-[8px] p-5  relative">
@@ -33,7 +35,7 @@ function Cart() {
                 >
                   <span>{pk.name}</span>
                   <div className="flex gap-5">
-                    <span>{`${pk.duration}min`}</span>
+                    <span>{`${pk.serviceDuration}min`}</span>
                     <span>{pk.price}</span>
                     <button>
                       <XMarkIcon
@@ -56,7 +58,7 @@ function Cart() {
                 >
                   <span>{addon.name}</span>
                   <div className="flex gap-5">
-                    <span>{`${addon.duration}min`}</span>
+                    <span>{`${addon.serviceDuration}min`}</span>
                     <span>{addon.price}</span>
                     <button>
                       <XMarkIcon
@@ -80,11 +82,13 @@ function Cart() {
         </div>
       )}
 
-      <div className="w-full mt-3">
-        <Button colour="dark" fullWidth onClick={handleCheckOut}>
-          Check Out
-        </Button>
-      </div>
+      {!hiddenCheckOut && (
+        <div className="w-full mt-3">
+          <Button colour="dark" fullWidth onClick={handleCheckOut}>
+            Check Out
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

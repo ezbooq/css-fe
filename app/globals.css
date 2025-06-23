@@ -42,9 +42,17 @@
   --color-typography-status-purple: #6734f8;
   --color-typography-status-orange: #ff7658;
 
+  /* Fixed typo here */
+  --color-typography-basic: #2e2e2e;
+
   /* Other Variables */
   --color-border: #dadada;
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* ✅ Custom utility class using dynamic CSS variable */
+.font-basic {
+  color: var(--color-typography-basic, #2e2e2e); /* fallback to dark gray */
 }

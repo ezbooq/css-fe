@@ -1,6 +1,5 @@
 import { type Option } from "@/types/common";
 import SelectCard from "./SelectCard";
-import { LockClosedIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 type CardSelectProps = {
   cardData: Option[];

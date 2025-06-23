@@ -1,3 +1,4 @@
+import Image from "next/image";
 type SelectCardProps = {
   name: string;
   icon?: string; // Updated to string for image URL
@@ -23,7 +24,13 @@ export default function SelectCard({
       <div className="text-center">
         <div className="text-base text-typography-secondary">{name}</div>
         {icon && (
-          <img src={icon} alt={`${name} icon`} className="mt-1 w-12 h-12" />
+          <Image
+            src={icon}
+            alt={`${name} icon`}
+            width={48}
+            height={48}
+            className="mt-1 w-12 h-12"
+          />
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyBEmGDUu1gAvSw1zaOIu1Ip4NbMo3c6rIo";
+const GOOGLE_MAPS_API_KEY = "AIzaSyA5YvqbOmSB2A1Q20FDgg-V7jCnTOoO8ow";
 
 type Props = {
   mapUrl: string;

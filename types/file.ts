@@ -8,9 +8,11 @@ export type UploadedFile = {
 };
 
 export type FileItem = {
+  id?: string | null;
   name: string;
   key: string;
   contentType: string;
   size: number;
   url: string;
+  type: number;
 };

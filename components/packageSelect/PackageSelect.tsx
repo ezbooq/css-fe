@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import PhotoViewer from "../photoViewer/PhotoViewer";
 import Button from "../button/Button";
 import {
   ArrowRightIcon,
@@ -9,74 +8,34 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import useCartStore from "@/stores/useCart";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { getTiersByParent } from "@/services/tiers/tiers";
+import { Tier } from "@/types/tier";
+import NewPhotoViewer from "../photoViewer/NewPhotoViewer";
 type PackageSelectProps = {
   isClosable?: boolean;
   close?: () => void;
   setSelectedPackage?: (id: string) => void;
   selectedPackage?: string;
-
   categoryId: string;
 };
 function PackageSelect({
   isClosable = false,
   close,
-  selectedPackage,
-  setSelectedPackage,
-
   categoryId,
 }: PackageSelectProps) {
+  const { businessCode } = useParams();
   const { addItem, hasIncluded } = useCartStore((state) => state);
-  const packages = [
-    {
-      id: "1",
-      name: "Presell Detailing",
-      description:
-        "Professional car wash services that leave your vehicle spotless and shining.",
-      duration: 30,
-      price: 100,
-      images: [
-        "https://budgetautodetailing.com/wp-content/uploads/2024/02/wiping-dust-car-detailing-Budget-Auto-Detailing-Burlington-ON-1-1-1024x683.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd_I_uafnxesKxaDDVFdXzeZ2TmYXaVUrBug&s",
-      ],
-    },
-    {
-      id: "2",
-      name: "Full Detailing",
-      description:
-        "Professional car wash services that leave your vehicle spotless and shining.",
-      duration: 30,
-      price: 75,
-      images: [
-        "https://budgetautodetailing.com/wp-content/uploads/2024/02/wiping-dust-car-detailing-Budget-Auto-Detailing-Burlington-ON-1-1-1024x683.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd_I_uafnxesKxaDDVFdXzeZ2TmYXaVUrBug&s",
-      ],
-    },
-    {
-      id: "3",
-      name: "Full Detailing",
-      description:
-        "Professional car wash services that leave your vehicle spotless and shining.",
-      duration: 30,
-      price: 75,
-      images: [
-        "https://budgetautodetailing.com/wp-content/uploads/2024/02/wiping-dust-car-detailing-Budget-Auto-Detailing-Burlington-ON-1-1-1024x683.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd_I_uafnxesKxaDDVFdXzeZ2TmYXaVUrBug&s",
-      ],
-    },
-    {
-      id: "4",
-      name: "Full Detailing",
-      description:
-        "Professional car wash services that leave your vehicle spotless and shining.",
-      duration: 30,
-      price: 75,
-      images: [
-        "https://budgetautodetailing.com/wp-content/uploads/2024/02/wiping-dust-car-detailing-Budget-Auto-Detailing-Burlington-ON-1-1-1024x683.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd_I_uafnxesKxaDDVFdXzeZ2TmYXaVUrBug&s",
-      ],
-    },
-    // Add more packages as needed
-  ];
+  const packagesData = useQuery({
+    queryKey: [
+      "packages",
+      { businessCode: businessCode ?? "", categoryId: categoryId },
+    ],
+    queryFn: getTiersByParent,
+    enabled: !!businessCode,
+  });
+  const packages = packagesData.data;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [canNext, setCanNext] = useState(true);
@@ -86,13 +45,13 @@ function PackageSelect({
   useEffect(() => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
-      const totalWidth = packages.length * 300; // each card ~280 + margin
+      const totalWidth = (packages?.length ?? 0) * 300; // each card ~280 + margin
       const currentOffset = currentIndex * 300;
 
       setCanNext(currentOffset + containerWidth < totalWidth);
       setCanPrev(currentIndex > 0);
     }
-  }, [currentIndex, packages.length]);
+  }, [currentIndex, packages?.length]);
 
   const nextSlide = () => {
     if (canNext) setCurrentIndex((prev) => prev + 1);
@@ -101,15 +60,16 @@ function PackageSelect({
   const prevSlide = () => {
     if (canPrev) setCurrentIndex((prev) => prev - 1);
   };
-  const handlePackageAdd = (pk: any) => {
+  const handlePackageAdd = (pk: Tier) => {
     addItem({
       id: pk.id,
       name: pk.name,
       price: pk.price,
-      duration: pk.duration,
+      serviceDuration: pk.serviceDuration,
       type: "PACKAGE",
       categoryId,
       level: 0,
+      businessCode: (businessCode as string) ?? "",
     });
   };
   return (
@@ -175,50 +135,80 @@ function PackageSelect({
       )}
 
       <div className="overflow-hidden" ref={containerRef}>
+        {packagesData.isPending &&
+          Array.from({ length: 3 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="w-[300px] bg-gray-100 animate-pulse shadow p-4 rounded-lg my-1 flex flex-col gap-3"
+            >
+              <div className="w-full h-[164px] bg-gray-200 rounded" />
+              <div className="h-5 bg-gray-200 rounded w-2/3 mt-3" />
+              <div className="h-4 bg-gray-200 rounded w-full" />
+              <div className="h-4 bg-gray-200 rounded w-1/2" />
+              <div className="mt-3 flex flex-col gap-2">
+                <div className="flex justify-between">
+                  <div className="h-4 bg-gray-200 rounded w-1/4" />
+                  <div className="h-4 bg-gray-200 rounded w-1/4" />
+                </div>
+                <div className="flex justify-between">
+                  <div className="h-4 bg-gray-200 rounded w-1/4" />
+                  <div className="h-4 bg-gray-200 rounded w-1/4" />
+                </div>
+              </div>
+              <div className="w-full mt-3 h-10 bg-gray-200 rounded" />
+            </div>
+          ))}
+        {packages && packages.length === 0 && (
+          <div className="flex justify-center text-typography-secondary-light">
+            No Packages Available
+          </div>
+        )}
         <motion.div
           className="flex gap-4"
           animate={{ x: -currentIndex * 300 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          style={{ width: `${packages.length * 300}px` }}
+          style={{ width: `${(packages?.length ?? 0) * 300}px` }}
         >
-          {packages.map((pk) => (
-            <div
-              key={pk.id}
-              className="min-w-[280px] bg-white shadow p-4 rounded-lg"
-            >
-              <div className="w-full">
-                <PhotoViewer
-                  images={pk.images}
-                  aspectRatio="1440/820"
-                  rounded
-                  autoRotate={false}
-                />
-              </div>
+          {packages &&
+            packages.length > 0 &&
+            packages?.map((pk) => (
+              <div
+                key={pk.id}
+                className="w-[300px] bg-white shadow p-4 rounded-lg my-1"
+              >
+                <div className="w-full">
+                  <NewPhotoViewer
+                    images={pk.files}
+                    aspectRatio="1440/820"
+                    rounded
+                    autoRotate={false}
+                  />
+                </div>
 
-              <h2 className="text-base font-semibold mt-3">{pk.name}</h2>
-              <p className="text-sm mb-3">{pk.description}</p>
-              <div className="mt-3">
-                <div className="flex justify-between text-base font-semibold">
-                  <p>Price</p>
-                  <p>{`${pk.price} $`}</p>
+                <h2 className="text-base font-semibold mt-3">{pk.name}</h2>
+                <p className="text-sm mb-3">{pk.description}</p>
+                <div className="mt-3">
+                  <div className="flex justify-between text-base font-semibold">
+                    <p>Price</p>
+                    <p>{`${pk.price} $`}</p>
+                  </div>
+                  <div className="flex justify-between text-base font-semibold">
+                    <p>Duration</p>
+                    <p>{`${pk.serviceDuration} min`}</p>
+                  </div>
                 </div>
-                <div className="flex justify-between text-base font-semibold">
-                  <p>Duration</p>
-                  <p>{`${pk.duration} min`}</p>
+                <div className="w-full mt-3">
+                  <Button
+                    colour="dark"
+                    fullWidth
+                    onClick={() => handlePackageAdd(pk)}
+                    disabled={hasIncluded(pk.id)}
+                  >
+                    {`${hasIncluded(pk.id) ? "Added" : "Add Package"}`}
+                  </Button>
                 </div>
               </div>
-              <div className="w-full mt-3">
-                <Button
-                  colour="dark"
-                  fullWidth
-                  onClick={() => handlePackageAdd(pk)}
-                  disabled={hasIncluded(pk.id)}
-                >
-                  {`${hasIncluded(pk.id) ? "Added" : "Add Package"}`}
-                </Button>
-              </div>
-            </div>
-          ))}
+            ))}
         </motion.div>
       </div>
     </div>
