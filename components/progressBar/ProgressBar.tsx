@@ -22,17 +22,17 @@ export default function ProgressBar({ steps, selectedTabIndex }: Props) {
   return (
     <div>
       <div className="flex justify-between">
-        <p className="text-sm   text-typography-secondary">
+        <p className="text-sm   ">
           {steps[selectedTabIndex - 1]?.description || "Progress"}
         </p>
         <div>
-          <span className="text-sm text-typography-secondary-light font-medium">
+          <span className="text-sm text-typography-basic/80 font-medium">
             Step
           </span>
-          <span className="text-sm text-typography-secondary-light">
+          <span className="text-sm text-typography-basic/80">
             {` ${selectedTabIndex}`}
           </span>{" "}
-          <span className="text-typography-secondary/30">{`of ${steps.length}`}</span>
+          <span className="text-typography-basic/30">{`of ${steps.length}`}</span>
         </div>
       </div>
 

@@ -71,8 +71,8 @@ export default function AddressPage() {
         : null,
     logoPlacement: businessData.data?.logoPlacement ?? "left",
     bannerImages: businessData.data?.bannerImages,
-    fontColor: businessData.data?.fontColor ?? "#2e2e2e",
-    bgColor: businessData.data?.cardBackgroundColor ?? "#ffffff",
+    fontColor: businessData.data?.fontColor ?? "#423EEA",
+    bgColor: businessData.data?.cardBackgroundColor ?? "#2e2e2e",
   };
   return (
     <>

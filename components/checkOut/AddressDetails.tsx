@@ -202,9 +202,7 @@ export default function AddressDetails() {
 
             return (
               <div key={q.id} className="mb-4">
-                <label className="block text-sm text-typography-secondary mb-1">
-                  {q.question}
-                </label>
+                <label className="block text-sm  mb-1">{q.question}</label>
                 <SearchOptionSelect
                   handleSelected={(option) => handleOptionSelect(q.id, option)}
                   options={options}

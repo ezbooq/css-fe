@@ -22,7 +22,7 @@ export default function SelectCard({
       onClick={onClick}
     >
       <div className="text-center">
-        <div className="text-base text-typography-secondary">{name}</div>
+        <div className="text-base ">{name}</div>
         {icon && (
           <Image
             src={icon}

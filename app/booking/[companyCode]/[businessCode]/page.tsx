@@ -72,7 +72,8 @@ export default async function BusinessCodePage({ params }: Props) {
     phone: businessData?.contactNumber ?? null,
     countryCode: businessData?.countryCode ?? null,
     email: businessData?.email ?? null,
-    location: businessData?.locationLink ?? null,
+    location:
+      businessData?.locationLink ?? "https://maps.app.goo.gl/k1cxAFiidTQP9cER6",
   };
 
   const layoutData = {
@@ -84,17 +85,19 @@ export default async function BusinessCodePage({ params }: Props) {
     bannerImages: businessData?.bannerImages,
     fontColor: businessData?.fontColor ?? "#2e2e2e",
     bgColor: businessData?.cardBackgroundColor ?? "#ffffff",
+    buttonColor: businessData?.buttonColor ?? "#414141",
+    fontFamily: businessData?.fontType ?? "Roboto",
   };
 
   return (
     <Layout data={layoutData}>
-      <div className="grid grid-col-1 sm:grid-cols-4 gap-5 w-full mt-4 px-4">
+      <div className="grid grid-col-1 sm:grid-cols-4 gap-5 w-full mt-4 px-4 ">
         <div className="sm:col-span-3">
           <BookingSection />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-4">
           {/* Contact Info */}
-          <div className="ring-1 ring-light-base p-5 rounded-[8px]">
+          <div className="ring-1 ring-light-base p-5 rounded-[8px] bg-light-surface">
             <p className="font-semibold text-lg mb-5">Contact Info</p>
             <div className="flex gap-5 items-center">
               <PhoneIcon className="h-5 w-5" />
@@ -109,7 +112,7 @@ export default async function BusinessCodePage({ params }: Props) {
           </div>
 
           {/* Location Info */}
-          <div className="ring-1 ring-light-base p-5 rounded-[8px]">
+          <div className="ring-1 ring-light-base p-5 rounded-[8px] bg-light-surface">
             <p className="font-semibold text-lg mb-5">Location Info</p>
             <a
               href={contactDetails.location ?? "#"}

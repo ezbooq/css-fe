@@ -1,25 +1,21 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const url = searchParams.get("url");
+export async function GET(req: NextRequest) {
+  const url = req.nextUrl.searchParams.get("url");
 
   if (!url) {
     return NextResponse.json({ error: "Missing URL" }, { status: 400 });
   }
 
   try {
-    const res = await fetch(url, {
+    const response = await fetch(url, {
       method: "HEAD",
       redirect: "follow",
     });
 
-    return NextResponse.json({ expandedUrl: res.url });
-  } catch (error) {
-    console.error("Failed to expand map URL:", error);
-    return NextResponse.json(
-      { error: "Failed to expand URL" },
-      { status: 500 }
-    );
+    return NextResponse.json({ expandedUrl: response.url });
+  } catch (err) {
+    console.error("Error expanding map URL:", err);
+    return NextResponse.json({ error: "Expansion failed" }, { status: 500 });
   }
 }

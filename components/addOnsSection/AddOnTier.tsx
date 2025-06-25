@@ -103,7 +103,7 @@ export default function AddOnTier({
             <ArchiveBoxXMarkIcon className="w-8 h-8" />
           </div>
         ) : (
-          <div className="flex justify-center text-typography-secondary-light">
+          <div className="flex justify-center text-typography-basic/70">
             No Add Ons Available
           </div>
         )}

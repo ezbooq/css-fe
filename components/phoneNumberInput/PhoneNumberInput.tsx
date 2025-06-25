@@ -74,7 +74,7 @@ export default function PhoneNumberInput({
           name={name}
           id={name}
           placeholder="Enter phone number"
-          className="text-sm placeholder:text-typography-dark/70 placeholder:text-sm appearance-none ring-typography-secondary/30 block rounded-[8px] py-2.5 px-3 text-gray-900 ring-1 ring-inset focus:ring-inset sm:text-base sm:leading-6 outline-none bg-transparent w-full"
+          className="text-sm placeholder:text-typography-basic/70 placeholder:text-sm appearance-none ring-typography-secondary/30 block rounded-[8px] py-2.5 px-3 text-gray-900 ring-1 ring-inset focus:ring-inset sm:text-base sm:leading-6 outline-none bg-transparent w-full"
         />
         {error && (
           <p className="mt-1 text-sm text-red-600 text-left">{error}</p>

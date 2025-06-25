@@ -28,7 +28,7 @@ function BookingSection() {
   console.log(categories);
   return (
     <div className="p-4">
-      <div>
+      <div className="ring-1 ring-light-base rounded-[8px] p-5  relative bg-light-surface">
         <p className="text-xl  font-semibold mb-5">Categories</p>
         <CardSelect
           cardData={categories.data || []}
@@ -45,7 +45,7 @@ function BookingSection() {
           <PackageSelect categoryId={selectedCategory} />
         )
       ) : (
-        <div className="ring-1 ring-light-base rounded-[8px] p-5 mt-5 h-52 flex justify-center items-center">
+        <div className="ring-1 ring-light-base rounded-[8px] p-5 mt-5 h-52 flex justify-center items-center bg-light-surface">
           <div className="flex flex-col justify-center items-center gap-2">
             <p className="text-xl">Oops Nothing to Show here! </p>
             <p className="text-xl font-medium items-center">

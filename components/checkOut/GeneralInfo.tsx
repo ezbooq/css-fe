@@ -142,9 +142,7 @@ function GeneralInfo() {
           </div>
           <div>
             {" "}
-            <label className="block text-sm  text-typography-secondary mb-1">
-              Phone Number
-            </label>
+            <label className="block text-sm   mb-1">Phone Number</label>
             <PhoneNumberInput
               name="phoneNumber"
               register={register}

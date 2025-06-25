@@ -21,7 +21,7 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
     router.push(`/booking/${companyCode}/${businessCode}/check-out`);
   };
   return (
-    <div className="ring-1 ring-light-base rounded-[8px] p-5  relative">
+    <div className="ring-1 ring-light-base rounded-[8px] p-5  relative bg-light-surface">
       <p className="font-semibold text-lg">Booking Summary</p>
       {items.length > 0 ? (
         <div>
@@ -31,7 +31,7 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
               {packages.map((pk) => (
                 <div
                   key={pk.id}
-                  className="flex justify-between items-center mt-2 text-sm text-typography-secondary-light"
+                  className="flex justify-between items-center mt-2 text-sm text-typography-basic/80"
                 >
                   <span>{pk.name}</span>
                   <div className="flex gap-5">
@@ -54,7 +54,7 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
               {addons.map((addon) => (
                 <div
                   key={addon.id}
-                  className="flex justify-between items-center mt-2 text-sm text-typography-secondary-light"
+                  className="flex justify-between items-center mt-2 text-sm text-typography-basic/80"
                 >
                   <span>{addon.name}</span>
                   <div className="flex gap-5">

@@ -60,7 +60,7 @@ function AddOnsSection({ categoryId }: AddOnsSectionProps) {
       item.parentId === selectedAddOns3
   );
   return (
-    <div className="ring-1 ring-light-base rounded-[8px] p-5 mt-5 relative">
+    <div className="ring-1 ring-light-base rounded-[8px] p-5 mt-5 relative bg-light-surface">
       <div>
         <p className="text-lg font-semibold mb-5">Selected Packages</p>
         <div>
@@ -77,29 +77,19 @@ function AddOnsSection({ categoryId }: AddOnsSectionProps) {
                 }`}
                 onClick={() => setSelectedPackage(pkg.id)}
               >
-                <span className="text-sm text-typography-secondary font-semibold">
-                  {pkg.name}
-                </span>
+                <span className="text-sm  font-semibold">{pkg.name}</span>
                 <div className="w-full flex justify-center gap-8">
-                  <span className="text-sm text-typography-secondary font-semibold">
-                    Price
-                  </span>
-                  <span className="text-sm text-typography-secondary font-semibold">
-                    -
-                  </span>
-                  <span className="text-sm text-typography-secondary font-semibold">
+                  <span className="text-sm  font-semibold">Price</span>
+                  <span className="text-sm  font-semibold">-</span>
+                  <span className="text-sm  font-semibold">
                     {`${pkg.price}$`}
                   </span>
                 </div>
 
                 <div className="w-full flex justify-center gap-8">
-                  <span className="text-sm text-typography-secondary font-semibold">
-                    Duration
-                  </span>
-                  <span className="text-sm text-typography-secondary font-semibold">
-                    -
-                  </span>
-                  <span className="text-sm text-typography-secondary font-semibold">
+                  <span className="text-sm  font-semibold">Duration</span>
+                  <span className="text-sm  font-semibold">-</span>
+                  <span className="text-sm  font-semibold">
                     {`${pkg.serviceDuration}min`}
                   </span>
                 </div>

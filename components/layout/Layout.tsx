@@ -10,6 +10,8 @@ type LayoutData = {
   bannerImages?: FileItem[];
   fontColor?: string;
   bgColor?: string;
+  buttonColor?: string;
+  fontFamily?: string;
 };
 
 type LayoutProps = {
@@ -24,8 +26,11 @@ export default function Layout({ children, data }: LayoutProps) {
         className={`min-h-screen flex flex-col mx-auto`}
         style={
           {
-            "--color-typography-basic": data?.fontColor ?? "#2e2e2e",
+            "--color-typography-basic": data?.fontColor ?? undefined,
+            "--color-button-dark": data?.buttonColor ?? undefined,
             backgroundColor: data?.bgColor ?? undefined,
+            color: data?.fontColor ?? undefined,
+            fontFamily: data?.fontFamily ?? undefined,
           } as React.CSSProperties
         }
       >

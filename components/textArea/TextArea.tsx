@@ -38,10 +38,7 @@ function TextArea({
   return (
     <>
       {label && (
-        <label
-          htmlFor={name}
-          className="block text-sm  text-typography-secondary mb-1"
-        >
+        <label htmlFor={name} className="block text-sm   mb-1">
           {label}
         </label>
       )}
@@ -53,7 +50,7 @@ function TextArea({
           id={name}
           rows={rows}
           disabled={disabled}
-          className={`text-sm placeholder:text-typography-dark/70 placeholder:text-sm appearance-none  ring-typography-secondary/30 block w-full rounded-[8px] py-2.5 pr-10 pl-3  text-gray-900 ring-1 ring-inset focus:ring-inset sm:text-base sm:leading-6 outline-none bg-light-background ${customStyle} ${
+          className={`text-sm placeholder:text-typography-basic/70 placeholder:text-sm appearance-none  ring-typography-secondary/30 block w-full rounded-[8px] py-2.5 pr-10 pl-3  text-gray-900 ring-1 ring-inset focus:ring-inset sm:text-base sm:leading-6 outline-none bg-light-background ${customStyle} ${
             error ? "focus:ring-red-500 ring-red-500" : ""
           } ${disabled ? "cursor-not-allowed" : ""}`}
           placeholder={placeholder}

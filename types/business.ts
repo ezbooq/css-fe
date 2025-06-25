@@ -22,6 +22,7 @@ export type BusinessData = {
   locationLink: string | null;
   logoPlacement: "left" | "right" | null;
   buttonColor: string | null;
+  fontType: string | null;
   cardBackgroundColor: string | null;
   fontColor: string | null;
   logos: FileItem[];

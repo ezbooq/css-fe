@@ -73,9 +73,11 @@ function PackageSelect({
     });
   };
   return (
-    <div className="ring-1 ring-light-base rounded-[8px] p-5 mt-5 relative">
+    <div className="ring-1 ring-light-base rounded-[8px] p-5 mt-5 relative bg-light-surface">
       <div className="flex justify-between">
-        <p className="text-lg font-semibold mb-5">Choose Packages</p>
+        <p className="text-lg font-semibold mb-5 text-typography-basic">
+          Choose Packages
+        </p>
         <div className="flex gap-5 items-center">
           <div className="flex gap-5">
             <button
@@ -159,7 +161,7 @@ function PackageSelect({
             </div>
           ))}
         {packages && packages.length === 0 && (
-          <div className="flex justify-center text-typography-secondary-light">
+          <div className="flex justify-center text-typography-basic/70">
             No Packages Available
           </div>
         )}

@@ -44,7 +44,7 @@
 
   /* Fixed typo here */
   --color-typography-basic: #2e2e2e;
-
+  --color-button-dark:#414141
   /* Other Variables */
   --color-border: #dadada;
   --color-foreground: var(--foreground);
@@ -56,3 +56,5 @@
 .font-basic {
   color: var(--color-typography-basic, #2e2e2e); /* fallback to dark gray */
 }
+
+

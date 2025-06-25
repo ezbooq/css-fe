@@ -37,7 +37,7 @@ const buttonColour: { [key: string]: string } = {
     "bg-white hover:bg-gray-50 ring-1 ring-light-secondary-dark text-typography-secondary text-sm ring-inset shadow-sm",
   primary:
     "bg-light-primary  text-typography-primary-light  text-sm  hover:bg-light-primary-light duration-300 shadow-sm focus:bg-light-primary-dark",
-  dark: "text-light-surface bg-light-gray-dark shadow-sm hover:bg-light-base-dark duration-300 shadow-sm",
+  dark: "text-light-surface bg-button-dark shadow-sm hover:bg-button-dark/80 duration-300 shadow-sm",
   none: "bg-transparent  text-typography-secondary-dark  focus-visible:outline-none font-semibold",
   secondary:
     "bg-light-secondary  hover:bg-typography-secondary/50 text-sm text-typography-secondary shadow-sm",
@@ -53,7 +53,7 @@ const buttonDisabledColour: { [key: string]: string } = {
   white: "bg-white/50 text-gray-500/50 ring-1 ring-light-base ",
   primary:
     "bg-light-secondary-light text-typography-primary-light cursor-not-allowed",
-  dark: "bg-light-base-dark text-light-surface/30 cursor-not-allowed",
+  dark: "bg-button-dark/30 text-light-surface/30 cursor-not-allowed",
   none: "bg-transparent text-sm text-typography-secondary-dark/30 cursor-not-allowed font-semibold ",
   secondary:
     "bg-typography-secondary/30  cursor-not-allowed text-sm text-typography-secondary",

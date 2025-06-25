@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyA5YvqbOmSB2A1Q20FDgg-V7jCnTOoO8ow";
 
@@ -13,13 +13,50 @@ type Props = {
 const extractCoordinates = (
   url: string
 ): { lat: number; lng: number } | null => {
-  const match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-  if (match) {
+  // Match @lat,lng
+  const atMatch = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (atMatch) {
     return {
-      lat: parseFloat(match[1]),
-      lng: parseFloat(match[2]),
+      lat: parseFloat(atMatch[1]),
+      lng: parseFloat(atMatch[2]),
     };
   }
+
+  // Match ?q=lat,lng
+  const qMatch = url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (qMatch) {
+    return {
+      lat: parseFloat(qMatch[1]),
+      lng: parseFloat(qMatch[2]),
+    };
+  }
+
+  // Match /lat,lng
+  const pathMatch = url.match(/\/(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (pathMatch) {
+    return {
+      lat: parseFloat(pathMatch[1]),
+      lng: parseFloat(pathMatch[2]),
+    };
+  }
+
+  return null;
+};
+
+const getCoordinatesFromPlace = async (
+  place: string
+): Promise<{ lat: number; lng: number } | null> => {
+  const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+    place
+  )}&key=${GOOGLE_MAPS_API_KEY}`;
+
+  const res = await fetch(geocodeUrl);
+  const data = await res.json();
+
+  if (data.status === "OK" && data.results[0]) {
+    return data.results[0].geometry.location;
+  }
+
   return null;
 };
 
@@ -32,29 +69,37 @@ export default function GoogleMapFromUrl({ mapUrl, height = "300px" }: Props) {
   useEffect(() => {
     const resolveUrl = async () => {
       try {
+        let finalUrl = mapUrl;
+
         if (mapUrl.includes("maps.app.goo.gl")) {
           const res = await fetch(
             `/api/expand-map-url?url=${encodeURIComponent(mapUrl)}`
           );
           const data = await res.json();
+          if (!data.expandedUrl) throw new Error("URL expansion failed.");
+          finalUrl = data.expandedUrl;
+        }
 
-          if (data.expandedUrl) {
-            const coords = extractCoordinates(data.expandedUrl);
-            if (coords) {
-              setLocation(coords);
-            } else {
-              setError("Coordinates not found in expanded URL.");
-            }
-          } else {
-            setError("URL expansion failed.");
-          }
+        const coords = extractCoordinates(finalUrl);
+
+        if (coords) {
+          setLocation(coords);
         } else {
-          const coords = extractCoordinates(mapUrl);
-          if (coords) {
-            setLocation(coords);
-          } else {
-            setError("Coordinates not found in URL.");
+          // Try to extract place name
+          const placeMatch = finalUrl.match(/\/maps\/place\/([^\/@]+)/);
+          const placeName = placeMatch
+            ? decodeURIComponent(placeMatch[1].replace(/\+/g, " "))
+            : "";
+
+          if (placeName) {
+            const geoCoords = await getCoordinatesFromPlace(placeName);
+            if (geoCoords) {
+              setLocation(geoCoords);
+              return;
+            }
           }
+
+          setError("Failed to extract coordinates or resolve place.");
         }
       } catch (err) {
         console.error("Error resolving map URL:", err);
@@ -73,11 +118,9 @@ export default function GoogleMapFromUrl({ mapUrl, height = "300px" }: Props) {
         {location && (
           <GoogleMap
             center={location}
-            zoom={16}
+            zoom={14}
             mapContainerStyle={{ width: "100%", height: "100%" }}
-          >
-            <Marker position={location} />
-          </GoogleMap>
+          ></GoogleMap>
         )}
       </LoadScript>
     </div>
