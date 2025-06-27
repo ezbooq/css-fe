@@ -27,22 +27,22 @@ type ButtonProps = {
 };
 
 const buttonColour: { [key: string]: string } = {
-  blue: "bg-button-blue hover:bg-button-blue/80 focus-visible:outline-button-blue text-white shadow-sm",
-  red: "bg-[#EC0606] hover:bg-[#EC0606]/70 focus-visible:outline-[#EC0606] text-white shadow-sm",
+  blue: "bg-button-blue hover:bg-button-blue/80 focus-visible:outline-button-blue text-white shadow-sm cursor-pointer",
+  red: "bg-[#EC0606] hover:bg-[#EC0606]/70 focus-visible:outline-[#EC0606] text-white shadow-sm cursor-pointer",
   green:
-    "bg-button-green hover:bg-button-green/80 focus-visible:outline-button-green text-white shadow-sm",
+    "bg-button-green hover:bg-button-green/80 focus-visible:outline-button-green text-white shadow-sm cursor-pointer",
   yellow:
-    "bg-button-yellow hover:bg-button-yellow/80 focus-visible:outline-button-yellow text-white shadow-sm",
+    "bg-button-yellow hover:bg-button-yellow/80 focus-visible:outline-button-yellow text-white shadow-sm cursor-pointer",
   white:
-    "bg-white hover:bg-gray-50 ring-1 ring-light-secondary-dark text-typography-secondary text-sm ring-inset shadow-sm",
+    "bg-white hover:bg-gray-50 ring-1 ring-light-secondary-dark text-typography-secondary text-sm ring-inset shadow-sm cursor-pointer",
   primary:
-    "bg-light-primary  text-typography-primary-light  text-sm  hover:bg-light-primary-light duration-300 shadow-sm focus:bg-light-primary-dark",
-  dark: "text-light-surface bg-button-dark shadow-sm hover:bg-button-dark/80 duration-300 shadow-sm",
-  none: "bg-transparent  text-typography-secondary-dark  focus-visible:outline-none font-semibold",
+    "bg-light-primary  text-typography-primary-light  text-sm  hover:bg-light-primary-light duration-300 shadow-sm focus:bg-light-primary-dark cursor-pointer",
+  dark: "text-light-surface bg-button-dark shadow-sm hover:bg-button-dark/80 duration-300 shadow-sm cursor-pointer",
+  none: "bg-transparent  text-typography-secondary-dark  focus-visible:outline-none font-semibold cursor-pointer",
   secondary:
-    "bg-light-secondary  hover:bg-typography-secondary/50 text-sm text-typography-secondary shadow-sm",
+    "bg-light-secondary  hover:bg-typography-secondary/50 text-sm text-typography-secondary shadow-sm cursor-pointer",
   light:
-    "bg-transparent ring-1 ring-light-primary  text-typography-primary hover:ring-light-primary-light hover:bg-status-green hover:text-typography-primary focus:bg-[#DBFED3] focus:ring-light-primary duration-300 shadow-sm ",
+    "bg-transparent ring-1 ring-light-primary  text-typography-primary hover:ring-light-primary-light hover:bg-status-green hover:text-typography-primary focus:bg-[#DBFED3] focus:ring-light-primary duration-300 shadow-sm cursor-pointer",
 };
 
 const buttonDisabledColour: { [key: string]: string } = {
