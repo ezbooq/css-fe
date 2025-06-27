@@ -5,6 +5,7 @@ import Cart from "@/components/cart/Cart";
 import Layout from "@/components/layout/Layout";
 import BookingSection from "@/components/bookingSection/BookingSection";
 import { BusinessData, ContactDetails } from "@/types/business";
+import { getCountryCallingCode } from "libphonenumber-js";
 import type { Metadata } from "next";
 type Props = {
   params: Promise<{ companyCode: string; businessCode: string }>;
@@ -70,7 +71,11 @@ export default async function BusinessCodePage({ params }: Props) {
 
   const contactDetails: ContactDetails = {
     phone: businessData?.contactNumber ?? null,
-    countryCode: businessData?.countryCode ?? null,
+    countryCode: businessData?.countryCode
+      ? getCountryCallingCode(
+          businessData.countryCode as any as import("libphonenumber-js").CountryCode
+        )
+      : getCountryCallingCode("US" as import("libphonenumber-js").CountryCode),
     email: businessData?.email ?? null,
     location:
       businessData?.locationLink ?? "https://maps.app.goo.gl/k1cxAFiidTQP9cER6",
@@ -81,14 +86,14 @@ export default async function BusinessCodePage({ params }: Props) {
       businessData?.logos && businessData.logos.length > 0
         ? businessData.logos[0].url
         : null,
-    logoPlacement: businessData?.logoPlacement ?? "left",
+    logoPlacement: businessData?.logoPlacement ?? 0,
     bannerImages: businessData?.bannerImages,
     fontColor: businessData?.fontColor ?? "#2e2e2e",
     bgColor: businessData?.cardBackgroundColor ?? "#ffffff",
     buttonColor: businessData?.buttonColor ?? "#414141",
     fontFamily: businessData?.fontType ?? "Roboto",
   };
-
+  console.log(businessData);
   return (
     <Layout data={layoutData}>
       <div className="grid grid-col-1 sm:grid-cols-4 gap-5 w-full mt-4 px-4 ">
@@ -101,7 +106,7 @@ export default async function BusinessCodePage({ params }: Props) {
             <p className="font-semibold text-lg mb-5">Contact Info</p>
             <div className="flex gap-5 items-center">
               <PhoneIcon className="h-5 w-5" />
-              <p>{`${contactDetails.countryCode ?? ""} ${
+              <p>{`+${contactDetails.countryCode ?? ""} ${
                 contactDetails.phone ?? ""
               }`}</p>
             </div>

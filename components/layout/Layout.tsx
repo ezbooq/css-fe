@@ -6,7 +6,7 @@ import { FileItem } from "@/types/file";
 import logo from "../../public/Logo.png";
 type LayoutData = {
   logos?: string | null;
-  logoPlacement?: "left" | "right";
+  logoPlacement?: 0 | 1;
   bannerImages?: FileItem[];
   fontColor?: string;
   bgColor?: string;
@@ -36,7 +36,7 @@ export default function Layout({ children, data }: LayoutProps) {
       >
         <div
           className={`flex items-center p-4 ${
-            data?.logoPlacement === "left" ? "flex-row" : "flex-row-reverse"
+            data?.logoPlacement === 0 ? "flex-row" : "flex-row-reverse"
           } justify-between`}
         >
           <Image

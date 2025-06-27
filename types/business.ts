@@ -20,7 +20,7 @@ export type BusinessData = {
   url: string;
   serviceMode: string | null;
   locationLink: string | null;
-  logoPlacement: "left" | "right" | null;
+  logoPlacement: 0 | 1 | null;
   buttonColor: string | null;
   fontType: string | null;
   cardBackgroundColor: string | null;

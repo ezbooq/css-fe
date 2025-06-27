@@ -34,7 +34,7 @@ function InputBox({
   };
 
   return (
-    <>
+    <div>
       {label && (
         <label htmlFor={name} className="block text-sm   mb-1">
           {label}
@@ -79,7 +79,7 @@ function InputBox({
         )}
       </div>
       {error && <p className="mt-1 text-sm text-red-600 text-left">{error}</p>}
-    </>
+    </div>
   );
 }
 

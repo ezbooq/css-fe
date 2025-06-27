@@ -69,10 +69,12 @@ export default function AddressPage() {
       businessData.data?.logos && businessData.data.logos.length > 0
         ? businessData.data.logos[0].url
         : null,
-    logoPlacement: businessData.data?.logoPlacement ?? "left",
-    bannerImages: businessData.data?.bannerImages,
-    fontColor: businessData.data?.fontColor ?? "#423EEA",
-    bgColor: businessData.data?.cardBackgroundColor ?? "#2e2e2e",
+    logoPlacement: businessData?.data?.logoPlacement ?? 0,
+    bannerImages: businessData?.data?.bannerImages,
+    fontColor: businessData?.data?.fontColor ?? "#2e2e2e",
+    bgColor: businessData?.data?.cardBackgroundColor ?? "#ffffff",
+    buttonColor: businessData?.data?.buttonColor ?? "#414141",
+    fontFamily: businessData?.data?.fontType ?? "Roboto",
   };
   return (
     <>
