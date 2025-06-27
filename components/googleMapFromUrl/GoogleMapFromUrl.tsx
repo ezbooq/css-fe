@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyA5YvqbOmSB2A1Q20FDgg-V7jCnTOoO8ow";
 
@@ -13,7 +13,14 @@ type Props = {
 const extractCoordinates = (
   url: string
 ): { lat: number; lng: number } | null => {
-  // Match @lat,lng
+  const dMatch = url.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
+  if (dMatch) {
+    return {
+      lat: parseFloat(dMatch[1]),
+      lng: parseFloat(dMatch[2]),
+    };
+  }
+
   const atMatch = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
   if (atMatch) {
     return {
@@ -22,7 +29,6 @@ const extractCoordinates = (
     };
   }
 
-  // Match ?q=lat,lng
   const qMatch = url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/);
   if (qMatch) {
     return {
@@ -31,7 +37,6 @@ const extractCoordinates = (
     };
   }
 
-  // Match /lat,lng
   const pathMatch = url.match(/\/(-?\d+\.\d+),(-?\d+\.\d+)/);
   if (pathMatch) {
     return {
@@ -81,11 +86,9 @@ export default function GoogleMapFromUrl({ mapUrl, height = "300px" }: Props) {
         }
 
         const coords = extractCoordinates(finalUrl);
-
         if (coords) {
           setLocation(coords);
         } else {
-          // Try to extract place name
           const placeMatch = finalUrl.match(/\/maps\/place\/([^\/@]+)/);
           const placeName = placeMatch
             ? decodeURIComponent(placeMatch[1].replace(/\+/g, " "))
@@ -112,17 +115,30 @@ export default function GoogleMapFromUrl({ mapUrl, height = "300px" }: Props) {
 
   if (error) return <div className="text-red-600">{error}</div>;
 
-  return (
-    <div className="rounded-[8px]" style={{ height }}>
+  return location ? (
+    <a
+      href={mapUrl} // ✅ Use the original URL
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ display: "block", height }}
+      className="rounded-[8px] overflow-hidden"
+    >
       <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-        {location && (
-          <GoogleMap
-            center={location}
-            zoom={14}
-            mapContainerStyle={{ width: "100%", height: "100%" }}
-          ></GoogleMap>
-        )}
+        <GoogleMap
+          center={location}
+          zoom={16}
+          mapContainerStyle={{
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none", // make it clickable
+          }}
+          options={{
+            disableDefaultUI: true,
+          }}
+        >
+          <Marker position={location} />
+        </GoogleMap>
       </LoadScript>
-    </div>
-  );
+    </a>
+  ) : null;
 }

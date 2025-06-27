@@ -5,6 +5,7 @@ export type ContactDetails = {
   countryCode: string | null;
   email: string | null;
   location: string | null;
+  address: string | null;
 };
 export type BusinessData = {
   id: string;

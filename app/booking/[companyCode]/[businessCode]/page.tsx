@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import GoogleMapFromUrl from "@/components/googleMapFromUrl/GoogleMapFromUrl";
-import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/16/solid";
+import { PhoneIcon, EnvelopeIcon, HomeIcon } from "@heroicons/react/16/solid";
 import Cart from "@/components/cart/Cart";
 import Layout from "@/components/layout/Layout";
 import BookingSection from "@/components/bookingSection/BookingSection";
@@ -77,6 +77,8 @@ export default async function BusinessCodePage({ params }: Props) {
         )
       : getCountryCallingCode("US" as import("libphonenumber-js").CountryCode),
     email: businessData?.email ?? null,
+
+    address: businessData?.address ?? null,
     location:
       businessData?.locationLink ?? "https://maps.app.goo.gl/k1cxAFiidTQP9cER6",
   };
@@ -119,14 +121,11 @@ export default async function BusinessCodePage({ params }: Props) {
           {/* Location Info */}
           <div className="ring-1 ring-light-base p-5 rounded-[8px] bg-light-surface">
             <p className="font-semibold text-lg mb-5">Location Info</p>
-            <a
-              href={contactDetails.location ?? "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline"
-            >
-              {contactDetails.location ?? "Location not available"}
-            </a>
+            <div className="flex gap-5 items-center">
+              <HomeIcon className="h-5 w-5" />
+              <p>{contactDetails.address ?? "Not Provided"}</p>
+            </div>
+
             <div className="mt-3 rounded-2xl">
               <GoogleMapFromUrl mapUrl={contactDetails.location ?? ""} />
             </div>
