@@ -84,7 +84,12 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
 
       {!hiddenCheckOut && (
         <div className="w-full mt-3">
-          <Button colour="dark" fullWidth onClick={handleCheckOut}>
+          <Button
+            colour="dark"
+            fullWidth
+            onClick={handleCheckOut}
+            disabled={items.length === 0}
+          >
             Check Out
           </Button>
         </div>
