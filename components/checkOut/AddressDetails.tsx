@@ -219,7 +219,12 @@ export default function AddressDetails() {
           </Button>
         </div>
         <div className="w-2/3">
-          <Button colour="dark" fullWidth type="submit">
+          <Button
+            colour="dark"
+            fullWidth
+            type="button"
+            onClick={() => setSelectedTabIndex(selectedTabIndex + 1)}
+          >
             Next
           </Button>
         </div>
