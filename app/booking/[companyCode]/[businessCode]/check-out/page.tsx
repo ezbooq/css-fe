@@ -49,7 +49,7 @@ const tabs = [
 export default function AddressPage() {
   const params = useParams();
   const { businessCode, companyCode } = params; // from route param
-  const [selectedTabIndex, setSelectedTabIndex] = useState(2);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(1);
   const [checkOutForm, setCheckOutForm] =
     useState<CheckOutForm>(initialCheckOutForm);
   const resetCheckOutForm = () => {
