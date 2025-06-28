@@ -73,7 +73,9 @@ export default function PaymentScreen() {
             authorize Booking Koala and its affiliates and their networks to
             deliver marketing and other material via the information provided.
           </p>
-          <p>Your card is charged AFTER the appointment is completed.</p>
+          <p className="mt-2">
+            Your card is charged after the appointment is completed.
+          </p>
         </div>
         <div className="mt-4 flex items-center">
           <input type="checkbox" id="acceptTerms" className="mr-2" />
