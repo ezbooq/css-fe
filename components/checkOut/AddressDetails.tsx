@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -12,10 +12,11 @@ import Button from "../button/Button";
 import SearchOptionSelect from "../searchOptionSelect/SearchOptionSelect";
 import { getQuestions } from "@/services/questions/questions";
 import { type Option } from "@/types/common";
+import { CheckOutContext } from "@/hooks/CheckOutContext";
 
 export default function AddressDetails() {
   const rawParams = useParams();
-
+  const { selectedTabIndex, setSelectedTabIndex } = useContext(CheckOutContext);
   const businessCode = Array.isArray(rawParams.businessCode)
     ? rawParams.businessCode[0]
     : rawParams.businessCode;
@@ -206,9 +207,14 @@ export default function AddressDetails() {
         </div>
       )}
 
-      <div className="w-full flex">
+      <div className="w-full flex gap-5">
         <div className="w-1/3">
-          <Button colour="light" fullWidth type="button">
+          <Button
+            colour="light"
+            fullWidth
+            type="button"
+            onClick={() => setSelectedTabIndex(selectedTabIndex - 1)}
+          >
             Back
           </Button>
         </div>
