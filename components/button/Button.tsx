@@ -42,7 +42,7 @@ const buttonColour: { [key: string]: string } = {
   secondary:
     "bg-light-secondary  hover:bg-typography-secondary/50 text-sm text-typography-secondary shadow-sm cursor-pointer",
   light:
-    "bg-transparent ring-1 ring-light-primary  text-typography-primary hover:ring-light-primary-light hover:bg-status-green hover:text-typography-primary focus:bg-[#DBFED3] focus:ring-light-primary duration-300 shadow-sm cursor-pointer",
+    "bg-transparent ring-1 ring-button-dark text-button-dark  hover:bg-button-dark/20  focus:bg-[#DBFED3] focus:ring-light-primary duration-300 shadow-sm cursor-pointer",
 };
 
 const buttonDisabledColour: { [key: string]: string } = {

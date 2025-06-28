@@ -3,6 +3,7 @@ import Button from "@/components/button/Button";
 import Cart from "@/components/cart/Cart";
 import AddressDetails from "@/components/checkOut/AddressDetails";
 import GeneralInfo from "@/components/checkOut/GeneralInfo";
+import PaymentScreen from "@/components/checkOut/PaymentScreen";
 import Layout from "@/components/layout/Layout";
 import ProgressBar from "@/components/progressBar/ProgressBar";
 import { CheckOutContext } from "@/hooks/CheckOutContext";
@@ -33,9 +34,9 @@ const steps = [
     status: "complete",
   },
   {
-    id: 2,
-    name: "Login Details",
-    description: "Staff Login Creation",
+    id: 3,
+    name: "Step 3",
+    description: "Step 3",
     href: "#",
     status: "complete",
   },
@@ -43,11 +44,12 @@ const steps = [
 const tabs = [
   { name: "Step 1", component: <GeneralInfo /> },
   { name: "Step 2", component: <AddressDetails /> },
+  { name: "Step 3", component: <PaymentScreen /> },
 ];
 export default function AddressPage() {
   const params = useParams();
   const { businessCode, companyCode } = params; // from route param
-  const [selectedTabIndex, setSelectedTabIndex] = useState(2);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(3);
   const [checkOutForm, setCheckOutForm] =
     useState<CheckOutForm>(initialCheckOutForm);
   const resetCheckOutForm = () => {

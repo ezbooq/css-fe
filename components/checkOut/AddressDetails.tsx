@@ -206,10 +206,17 @@ export default function AddressDetails() {
         </div>
       )}
 
-      <div className="w-full">
-        <Button colour="dark" fullWidth type="submit">
-          Next
-        </Button>
+      <div className="w-full flex">
+        <div className="w-1/3">
+          <Button colour="light" fullWidth type="button">
+            Back
+          </Button>
+        </div>
+        <div className="w-2/3">
+          <Button colour="dark" fullWidth type="submit">
+            Next
+          </Button>
+        </div>
       </div>
     </form>
   );

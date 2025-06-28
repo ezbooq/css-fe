@@ -122,7 +122,7 @@ export default async function BusinessCodePage({ params }: Props) {
           <div className="ring-1 ring-light-base p-5 rounded-[8px] bg-light-surface">
             <p className="font-semibold text-lg mb-5">Location Info</p>
             <div className="flex gap-5 items-center">
-              <HomeIcon className="h-5 w-5" />
+              <HomeIcon className="h-6 w-6" />
               <p>{contactDetails.address ?? "Not Provided"}</p>
             </div>
 
