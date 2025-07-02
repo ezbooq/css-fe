@@ -4,22 +4,22 @@ import Button from "../button/Button";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import useCartStore from "@/stores/useCart";
 import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 type CartProps = {
   hiddenCheckOut?: boolean;
 };
 function Cart({ hiddenCheckOut = false }: CartProps) {
-  const router = useRouter();
   const { businessCode, companyCode } = useParams();
   const items = useCartStore((state) => state.items);
   const totalAmount = useCartStore((state) => state.totalAmount);
-  const removeItem = useCartStore((state) => state.removeItem);
-
+  const decrementItem = useCartStore((state) => state.decrementItem);
+  console.log(items);
   const packages = items.filter((item) => item.type === "PACKAGE");
   const addons = items.filter((item) => item.type === "ADDONS");
-  const handleCheckOut = () => {
-    router.push(`/booking/${companyCode}/${businessCode}/check-out`);
-  };
+  // const handleCheckOut = () => {
+  //   router.push(`/booking/${companyCode}/${businessCode}/check-out`);
+  // };
   return (
     <div className="ring-1 ring-light-base rounded-[8px] p-5  relative bg-light-surface">
       <p className="font-semibold text-lg">Booking Summary</p>
@@ -34,13 +34,16 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
                   className="flex justify-between items-center mt-2 text-sm text-typography-basic/80"
                 >
                   <span>{pk.name}</span>
+                  {pk.quantity && pk.quantity > 1 && (
+                    <span>{`x ${pk.quantity}`}</span>
+                  )}
                   <div className="flex gap-5">
                     <span>{`${pk.serviceDuration}min`}</span>
                     <span>{pk.price}</span>
                     <button>
                       <XMarkIcon
-                        className="w-4 h-4 text-typography-secondary"
-                        onClick={() => removeItem(pk.id)}
+                        className="w-4 h-4 text-typography-secondary hover:scale-150 hover:text-light-primary"
+                        onClick={() => decrementItem(pk.id)}
                       />
                     </button>
                   </div>
@@ -62,8 +65,8 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
                     <span>{addon.price}</span>
                     <button>
                       <XMarkIcon
-                        className="w-4 h-4 text-typography-secondary"
-                        onClick={() => removeItem(addon.id)}
+                        className="w-4 h-4 text-typography-secondary hover:scale-150 hover:text-light-primary"
+                        onClick={() => decrementItem(addon.id)}
                       />
                     </button>
                   </div>
@@ -84,14 +87,20 @@ function Cart({ hiddenCheckOut = false }: CartProps) {
 
       {!hiddenCheckOut && (
         <div className="w-full mt-3">
-          <Button
-            colour="dark"
-            fullWidth
-            onClick={handleCheckOut}
-            disabled={items.length === 0}
+          <Link
+            href={`/booking/${companyCode}/${businessCode}/check-out`}
+            prefetch={true}
+            passHref
           >
-            Check Out
-          </Button>
+            <Button
+              colour="dark"
+              fullWidth
+              type="button"
+              disabled={items.length === 0}
+            >
+              Check Out
+            </Button>
+          </Link>
         </div>
       )}
     </div>

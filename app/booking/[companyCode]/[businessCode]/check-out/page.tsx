@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 const steps = [
   {
     id: 1,
@@ -78,6 +78,19 @@ export default function AddressPage() {
     buttonColor: businessData?.data?.buttonColor ?? "#414141",
     fontFamily: businessData?.data?.fontType ?? "Roboto",
   };
+
+  useEffect(() => {
+    if (businessData.data) {
+      setCheckOutForm((prev) => ({
+        ...prev,
+        basiceBusinessData: {
+          serviceModes: businessData.data.serviceMode
+            ? Number(businessData.data.serviceMode)
+            : 0,
+        },
+      }));
+    }
+  }, [businessData.isSuccess, businessData.data]);
   return (
     <>
       <Layout data={layoutData}>

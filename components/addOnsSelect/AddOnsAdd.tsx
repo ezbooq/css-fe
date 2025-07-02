@@ -34,7 +34,7 @@ function AddOnsAdd({
   addons,
 }: AddOnsAddProps) {
   const { businessCode } = useParams();
-  const { addItem, hasIncluded } = useCartStore((state) => state);
+  const { addItem } = useCartStore((state) => state);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [canNext, setCanNext] = useState(true);
   const [canPrev, setCanPrev] = useState(false);
@@ -175,9 +175,10 @@ function AddOnsAdd({
                         colour="dark"
                         fullWidth
                         onClick={() => handleAddOnsAdd(pk)}
-                        disabled={hasIncluded(pk.id)}
+                        // disabled={hasIncluded(pk.id)}
                       >
-                        {`${hasIncluded(pk.id) ? "Added" : "Add"}`}
+                        Add
+                        {/* {`${hasIncluded(pk.id) ? "Added" : "Add"}`} */}
                       </Button>
                     </div>
                   </div>

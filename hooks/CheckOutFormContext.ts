@@ -2,8 +2,11 @@ import { CheckOutForm } from "@/types/checkOutFormContext";
 import { createContext } from "react";
 
 export const initialCheckOutForm: CheckOutForm = {
+  basiceBusinessData: {
+    serviceModes: 0,
+  },
   generalDetails: {
-    serviceType: undefined,
+    serviceMode: 0,
     appointmentDate: undefined,
     appointmentTime: undefined,
     firstName: undefined,
@@ -12,7 +15,7 @@ export const initialCheckOutForm: CheckOutForm = {
     countryCode: undefined,
     phoneNumber: undefined,
   },
-  address: {
+  addressDetails: {
     address: undefined,
     apartmentNumber: undefined,
     city: undefined,

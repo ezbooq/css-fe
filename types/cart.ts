@@ -10,4 +10,5 @@ export type CartItem = {
   categoryId: string;
   level: number;
   parentId?: string;
+  quantity?: number;
 };

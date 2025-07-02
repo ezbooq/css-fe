@@ -1,18 +1,9 @@
-type Package = {
-  uploadFiles: (File | string)[] | undefined;
-  serviceId: string | undefined;
-  categoryId: string | undefined;
-  tire1Id: string | undefined;
-  tire2Id: string | undefined;
+type basicBusinessData = {
+  serviceModes: number;
 };
-type ContactInfo = {
-  address: string | undefined;
-  email: string | undefined;
-  phoneNumber: string | undefined;
-  countryCode: string | undefined;
-};
+
 type GeneralDetails = {
-  serviceType: "on-site" | "off-site" | undefined;
+  serviceMode: number;
   appointmentDate: string | undefined;
   appointmentTime: string | undefined;
   firstName: string | undefined;
@@ -30,6 +21,8 @@ type Address = {
   note?: string | undefined;
 };
 export type CheckOutForm = {
+  basiceBusinessData: basicBusinessData;
   generalDetails: GeneralDetails;
-  address: Address;
+  addressDetails: Address;
+  questionAnswers?: Record<string, string>;
 };

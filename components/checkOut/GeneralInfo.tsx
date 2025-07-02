@@ -10,19 +10,17 @@ import { Option } from "@/types/common";
 import Button from "../button/Button";
 import { CheckOutContext } from "@/hooks/CheckOutContext";
 import { CheckOutFormContext } from "@/hooks/CheckOutFormContext";
-const data = {
-  serviceMode: 0,
-};
 
 function GeneralInfo() {
   const { selectedTabIndex, setSelectedTabIndex } = useContext(CheckOutContext);
   const { setCheckOutForm, checkOutForm } = useContext(CheckOutFormContext);
+  const serviceModes = checkOutForm.basiceBusinessData.serviceModes;
+  const selectedServiceMode = checkOutForm.generalDetails.serviceMode;
   const [selectedCountryCode, setSelectedCountryCode] = useState<
     Option | undefined
   >(countryCodeList[126]);
-  const [selectedOption, setSelectedOption] = React.useState<number>(
-    data.serviceMode === 0 || data.serviceMode === 1 ? 1 : 2
-  );
+  const [selectedOption, setSelectedOption] =
+    React.useState<number>(selectedServiceMode);
   const schema = z.object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
@@ -32,8 +30,12 @@ function GeneralInfo() {
       .nonempty("Phone number is required")
       .refine(
         (value) => {
-          const fullPhoneNumber = `${selectedCountryCode?.name}${value}`;
-          const parsedPhoneNumber = parsePhoneNumberFromString(fullPhoneNumber);
+          const countryCode = selectedCountryCode?.id?.toUpperCase(); // e.g., "US", "RU"
+          if (!countryCode) return false;
+          const parsedPhoneNumber = parsePhoneNumberFromString(
+            value,
+            countryCode as import("libphonenumber-js").CountryCode
+          );
           return parsedPhoneNumber?.isValid() ?? false;
         },
         { message: "Invalid phone number" }
@@ -49,19 +51,32 @@ function GeneralInfo() {
     formState: { errors },
   } = useForm<FieldTypes>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      firstName: checkOutForm.generalDetails.firstName || "",
+      lastName: checkOutForm.generalDetails.lastName || "",
+      email: checkOutForm.generalDetails.email || "",
+      phoneNumber: checkOutForm.generalDetails.phoneNumber || "",
+    },
   });
-
+  React.useEffect(() => {
+    if (checkOutForm.generalDetails.countryCode) {
+      const found = countryCodeList.find(
+        (c) => c.id === checkOutForm.generalDetails.countryCode
+      );
+      if (found) setSelectedCountryCode(found);
+    }
+  }, [checkOutForm.generalDetails.countryCode]);
   const handler = (data: FieldTypes) => {
     setCheckOutForm({
       ...checkOutForm,
       generalDetails: {
-        serviceType: "on-site",
+        serviceMode: selectedOption ?? 1,
         appointmentDate: undefined,
         appointmentTime: undefined,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        countryCode: selectedCountryCode?.name,
+        countryCode: selectedCountryCode?.id ?? "",
         phoneNumber: data.phoneNumber,
       },
     });
@@ -72,7 +87,7 @@ function GeneralInfo() {
       <div className="border-b-2 border-light-base-light py-8">
         <h1 className="font-medium text-lg">Preferred Service Type</h1>
         <div className="grid grid-cols-2 mt-5">
-          {(data.serviceMode === 0 || data.serviceMode === 1) && (
+          {(serviceModes === 0 || serviceModes === 1) && (
             <label style={{ display: "flex", alignItems: "center" }}>
               <input
                 type="radio"
@@ -85,7 +100,7 @@ function GeneralInfo() {
               Will visit the business location
             </label>
           )}
-          {(data.serviceMode === 0 || data.serviceMode === 2) && (
+          {(serviceModes === 0 || serviceModes === 2) && (
             <label style={{ marginLeft: "1rem" }}>
               <input
                 type="radio"

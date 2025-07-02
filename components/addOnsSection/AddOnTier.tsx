@@ -29,7 +29,7 @@ export default function AddOnTier({
   categoryId,
 }: AddOnTierProps) {
   const { businessCode } = useParams();
-  const { removeItem } = useCartStore((state) => state);
+  const { decrementItem } = useCartStore((state) => state);
   const addOnsData = useQuery({
     queryKey: [
       "addOns",
@@ -61,9 +61,17 @@ export default function AddOnTier({
                 }`}
                 onClick={() => setSelectedAddOn(addOn.id)}
               >
-                <span className="text-sm text-typography-secondary font-semibold">
-                  {addOn.name}
-                </span>
+                <div className="flex gap-10">
+                  <span className="text-sm text-typography-secondary font-semibold">
+                    {addOn.name}
+                  </span>
+                  {addOn.quantity && addOn.quantity > 1 && (
+                    <span className="text-sm text-typography-secondary font-semibold">
+                      {`x ${addOn.quantity}`}
+                    </span>
+                  )}
+                </div>
+
                 <div className="w-full flex justify-center gap-8">
                   <span className="text-sm text-typography-secondary font-semibold">
                     Price
@@ -92,7 +100,7 @@ export default function AddOnTier({
                 <button className="hover:scale-150 hover:text-light-primary text-gray-700">
                   <XMarkIcon
                     className="w-4 h-4"
-                    onClick={() => removeItem(addOn.id)}
+                    onClick={() => decrementItem(addOn.id)}
                   />
                 </button>
               </div>

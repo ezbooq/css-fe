@@ -10,7 +10,7 @@ type AddOnsSectionProps = {
 };
 function AddOnsSection({ categoryId }: AddOnsSectionProps) {
   const verticalScale = 3;
-  const { items, removeItem } = useCartStore((state) => state);
+  const { items, decrementItem } = useCartStore((state) => state);
   const packages = items.filter(
     (item) => item.type === "PACKAGE" && item.categoryId === categoryId
   );
@@ -77,7 +77,13 @@ function AddOnsSection({ categoryId }: AddOnsSectionProps) {
                 }`}
                 onClick={() => setSelectedPackage(pkg.id)}
               >
-                <span className="text-sm  font-semibold">{pkg.name}</span>
+                <div className="flex gap-10">
+                  <span className="text-sm  font-semibold">{pkg.name}</span>
+                  {pkg.quantity && pkg.quantity > 1 && (
+                    <span className="text-sm  font-semibold">{`x ${pkg.quantity}`}</span>
+                  )}
+                </div>
+
                 <div className="w-full flex justify-center gap-8">
                   <span className="text-sm  font-semibold">Price</span>
                   <span className="text-sm  font-semibold">-</span>
@@ -98,7 +104,7 @@ function AddOnsSection({ categoryId }: AddOnsSectionProps) {
                 <button className="hover:scale-150 hover:text-light-primary text-gray-700">
                   <XMarkIcon
                     className="w-4 h-4 "
-                    onClick={() => removeItem(pkg.id)}
+                    onClick={() => decrementItem(pkg.id)}
                   />
                 </button>
               </div>

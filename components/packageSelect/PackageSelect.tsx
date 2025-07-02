@@ -26,7 +26,7 @@ function PackageSelect({
   categoryId,
 }: PackageSelectProps) {
   const { businessCode } = useParams();
-  const { addItem, hasIncluded } = useCartStore((state) => state);
+  const { addItem } = useCartStore((state) => state);
   const packagesData = useQuery({
     queryKey: [
       "packages",
@@ -204,9 +204,10 @@ function PackageSelect({
                     colour="dark"
                     fullWidth
                     onClick={() => handlePackageAdd(pk)}
-                    disabled={hasIncluded(pk.id)}
+                    // disabled={hasIncluded(pk.id)}
                   >
-                    {`${hasIncluded(pk.id) ? "Added" : "Add Package"}`}
+                    Add Package
+                    {/* {`${hasIncluded(pk.id) ? "Added" : "Add Package"}`} */}
                   </Button>
                 </div>
               </div>
